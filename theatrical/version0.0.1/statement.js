@@ -1,6 +1,9 @@
+const invoices = require("./invoices.json");
+const plays = require("./plays.json");
+
 function statement(invoice, plays) {
   let totalAmount = 0;
-  let valumeCredits = 0;
+  let volumeCredits = 0;
   let result = `Statement for ${invoice.customer}\n`;
   const format = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -28,7 +31,17 @@ function statement(invoice, plays) {
       default:
         throw new Error(`unknow type: ${play.type}`);
     }
-    // 添加积分
-    valumeCredits += Math.max(perf.audience - 30, 0);
+    // 添加观众量积分
+    volumeCredits += Math.max(perf.audience - 30, 0);
+    // 每十位喜剧参加者加上额外的积分
+    if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
+    // 订单打印信息
+    result += ` ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
+    totalAmount += thisAmount;
   }
+  result += `Amount owed is ${format(totalAmount / 100)}\n`;
+  result += `You earned ${volumeCredits} credits\n`;
+  return result;
 }
+
+for (let invoice of invoices) console.log(statement(invoice, plays));
