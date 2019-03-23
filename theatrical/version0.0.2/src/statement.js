@@ -26,9 +26,9 @@ function statement(invoice, plays) {
   result += `You earned ${volumeCredits} credits\n`;
   return result;
 
-  function amountFor(play, perf) {
+  function amountFor(aPerformance, perf) {
     let thisAmount = 0;
-    switch (play.type) {
+    switch (aPerformance.type) {
       case "tragedy":
         thisAmount = 40000;
         if (perf.audience > 30) {
@@ -43,7 +43,7 @@ function statement(invoice, plays) {
         thisAmount += 300 * perf.audience;
         break;
       default:
-        throw new Error(`unknow type: ${play.type}`);
+        throw new Error(`unknow type: ${aPerformance.type}`);
     }
     return thisAmount;
   }
