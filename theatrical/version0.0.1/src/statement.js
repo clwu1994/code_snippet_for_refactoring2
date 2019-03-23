@@ -1,5 +1,5 @@
-const invoices = require("./invoices.json");
-const plays = require("./plays.json");
+const invoices = require("../db/invoices.json");
+const plays = require("../db/plays.json");
 
 function statement(invoice, plays) {
   let totalAmount = 0;
